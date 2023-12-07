@@ -4,6 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DataMahasiswa;
+use App\Http\Controllers\UserControlController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +32,27 @@ Route::middleware(['auth'])->group(function(){
     Route::redirect('/home', '/user');
     Route::get('/admin',[AdminController::class,'index'])->name('admin')->middleware('userAkses:admin');
     Route::get('/user',[UserController::class,'index'])->name('user')->middleware('userAkses:user');
+
+    Route::get('/datamahasiswa',[DataMahasiswa::class,'index'])->name('datamahasiswa');
+    Route::get('/damatambah',[DataMahasiswa::class, 'tambah']);
+    Route::get('/damaedit/{id}',[DataMahasiswa::class, 'edit']);
+    Route::post('/damahapus/(id)',[DataMahasiswa::class,'hapus']);
+
+    Route::get('/usercontrol',[UserControlController::class,'index'])->name('usercontrol');
+
+    Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+
+        // new
+        Route::post('/tambahdama', [DataMahasiswa::class, 'create']);
+        Route::post('/editdama', [DataMahasiswa::class, 'change']);
+    
+        Route::get('/tambahuc', [UserControlController::class, 'tambah']);
+        Route::get('/edituc/{id}', [UserControlController::class, 'edit']);
+        Route::post('/hapusuc/{id}', [UserControlController::class, 'hapus']);
+        Route::post('/tambahuc', [UserControlController::class, 'create']);
+        Route::post('/edituc', [UserControlController::class, 'change']);
+    
+        Route::post('/uprole/{id}', [UproleController::class, 'index']);
 });
 
 
